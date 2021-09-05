@@ -10,14 +10,14 @@ var ip = require ('ip');
 exports.registrasi = function(req,res){
     var post = {
         username: req.body.username,
-        email: req.bod.email,
+        email: req.body.email,
         password: md5(req.body.password),
         role: req.body.role,
         tanggal_daftar: new Date()
     }
 
-    var query = "SELECT email FROM ?? WHERE ??";
-    var table = ["user", "email", post.email]
+    var query = "SELECT email FROM ?? WHERE ??=?";
+    var table = ["user", "email", post.email];
 
     query = mysql.format(query,table);
 
@@ -37,8 +37,8 @@ exports.registrasi = function(req,res){
                     }
                 });
             }else {
-                response.ok("email sudah terdaftar");
+                response.ok("email sudah terdaftar",res);
             }
-        }
+        } 
     });
 }
