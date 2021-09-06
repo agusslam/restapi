@@ -1,27 +1,28 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/secret');
 
-function verifikasi(roles){
-    return function(req, res, next){
+function verifikasi(){
+    return function(req, rest, next){
+        var role = req.body.role;
         //cek authorizaton header
-        var tokenWithBearer = req.header.authorization;
+        var tokenWithBearer = req.headers.authorization;
         if(tokenWithBearer){
             var token = tokenWithBearer.split(' ')[1];
             //verifiasi
             jwt.verify(token, config.secret, function(err,decoded){
                 if(err){
-                    return res.status(401).send({auth:false, message:"Token tidak terdaftar"});
+                    return rest.status(401).send({auth:false, message:"Token tidak terdaftar"});
                 }else{
-                    if(roles == 2){
+                    if(role == 2){
                         req.auth = decoded;
                         next();
                     } else {
-                        return res.status(401).send({auth:false, message:"Gagal otorisasi role anda"});
+                        return rest.status(401).send({auth:false, message:"Gagal otorisasi role anda"});
                     }
                 }
             }); 
         }else{
-            return res.status(401).send({auth:false, message:"Token tidak tersedia"});
+            return rest.status(401).send({auth:false, message:"Token tidak tersedia"});
         }
     }
 }

@@ -94,6 +94,6 @@ exports.login = function (req, res){
 }
 
 //membuat halaman role 2
-exports.halamanrole2 = function(req, res){
-    response.ok("Halaman khusus role 2");
+exports.halamanrahasia = function(req, res){
+    response.ok("Halaman khusus role 2", res);
 }
