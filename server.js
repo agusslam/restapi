@@ -2,11 +2,13 @@ const bodyParser = require('body-parser');
 const express = require('express');
 var morgan = require ('morgan');
 const app = express();
+var cors = require('cors');
 
 //parse application
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 //Panggil routes
 var routes = require('./routes');
